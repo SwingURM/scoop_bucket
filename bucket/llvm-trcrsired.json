@@ -32,7 +32,9 @@
         "LLVM_LIB_DIR": "$dir\\lib"
     },
     "checkver": {
-        "github": "https://github.com/trcrsired/llvm-releases"
+        "github": "https://github.com/trcrsired/llvm-releases",
+        "regex": "tag/llvm(\\d+)-(\\d+)",
+        "replace": "${1}-${2}"
     },
     "autoupdate": {
         "architecture": {

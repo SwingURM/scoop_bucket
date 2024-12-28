@@ -29,7 +29,8 @@
         "bin"
     ],
     "checkver": {
-        "github": "https://github.com/trcrsired/windows-msvc-sysroot"
+        "github": "https://github.com/trcrsired/windows-msvc-sysroot",
+        "regex": "tag/([\\d-]+)"
     },
     "autoupdate": {
         "architecture": {
