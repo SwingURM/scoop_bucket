@@ -22,7 +22,9 @@
         "foreach ($subDir in $subDirs) {",
         "    Copy-Item $subDir\\* $dir -Force -Recurse",
         "}",
-        "Remove-Item \"$dir\\dl*\" -Recurse"
+        "Remove-Item \"$dir\\dl*\" -Recurse",
+        "$clang_ver = Get-ChildItem -Path \"$dir\\lib\\clang\" -Directory | Select-Object -First 1",
+        "New-Item -ItemType HardLink -Path \"$dir\\bin\\libclang_rt.asan_dynamic-x86_64.dll\" -Target \"$clang_ver\\lib\\windows\\libclang_rt.asan_dynamic-x86_64.dll\""
     ],
     "env_add_path": "bin",
     "env_set": {
