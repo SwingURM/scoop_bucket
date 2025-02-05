@@ -1,0 +1,53 @@
+{
+    "version": "21-20250203-2025-01-22",
+    "description": "Collection of modular and reusable compiler and toolchain technologies.Also includes Windows MSVC headers and libraries with a standardized sysroot rule as what GCC and Clang do.(trcrsired build)",
+    "homepage": "https://github.com/trcrsired/llvm-releases",
+    "license": "NCSA",
+    "architecture": {
+        "64bit": {
+            "url": [
+                "https://github.com/trcrsired/llvm-releases/releases/download/llvm21-20250203/x86_64-windows-gnu.tar.xz",
+                "https://github.com/trcrsired/windows-msvc-sysroot/releases/download/2025-01-22/windows-msvc-sysroot.tar.xz"
+            ],
+            "hash": [
+                "7ff3d0c075f6176462c4312e95fa1b2c09c11726f9f19c2102502a07823f08d0",
+                "3f0ff5c89352c8c058d73781e3f411649acc216c9d3c7165d417da070e059d28"
+            ]
+        }
+    },
+    "pre_install": [
+        "$subDirs = Get-ChildItem -Path \"$dir\\x86_64-windows-gnu\" -Directory",
+        "foreach ($subDir in $subDirs) {",
+        "    Copy-Item $subDir\\* $dir -Force -Recurse",
+        "}",
+        "Remove-Item -Path \"$dir\\x86_64-windows-gnu\" -Recurse",
+        "Get-ChildItem -Path \"$dir\\lib\" -Recurse -Filter *.dll | Move-Item -Destination \"$dir\\bin\" -Force",
+        "Get-ChildItem \"$dir\\windows-msvc-sysroot\\bin\\x86_64-unknown-windows-msvc\" | ForEach-Object { New-Item -ItemType HardLink -Path (Join-Path \"$dir\\bin\" $_.Name) -Target $_.FullName}"
+    ],
+    "env_add_path": "bin",
+    "env_set": {
+        "LIBCLANG_PATH": "$dir\\bin",
+        "LLVM_LIB_DIR": "$dir\\lib"
+    },
+    "checkver": {
+        "script": [
+            "$llvmJson = Invoke-RestMethod 'https://api.github.com/repos/trcrsired/llvm-releases/releases/latest'",
+            "$llvmTag = $llvmJson.tag_name",
+            "$msvcJson = Invoke-RestMethod 'https://api.github.com/repos/trcrsired/windows-msvc-sysroot/releases/latest'",
+            "$msvcTag = $msvcJson.tag_name",
+            "$ver = $llvmTag + '-' + $msvcTag",
+            "Write-Output $ver"
+        ],
+        "regex": "llvm((?<ver1>\\d+-\\d{8})-(?<ver2>\\d{4}-\\d{2}-\\d{2}))"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": [
+                    "https://github.com/trcrsired/llvm-releases/releases/download/$matchVer1/x86_64-windows-gnu.tar.xz",
+                    "https://github.com/trcrsired/windows-msvc-sysroot/releases/download/$matchVer2/windows-msvc-sysroot.tar.xz"
+                ]
+            }
+        }
+    }
+}
