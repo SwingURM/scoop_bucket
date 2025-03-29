@@ -1,12 +1,12 @@
 {
-    "version": "21-20250320",
+    "version": "21-20250329",
     "description": "Collection of modular and reusable compiler and toolchain technologies. (trcrsired build)",
     "homepage": "https://github.com/trcrsired/llvm-releases",
     "license": "NCSA",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/trcrsired/llvm-releases/releases/download/llvm21-20250320/x86_64-windows-gnu.tar.xz",
-            "hash": "77c840f529f267148eeb7f387eac58b6c1b8b6d29333fd1e8ccafcb43e275bd7"
+            "url": "https://github.com/trcrsired/llvm-releases/releases/download/llvm21-20250329/x86_64-windows-gnu.tar.xz",
+            "hash": "b3a63321de184f3b711c460271c95b1c86e5f85dd69c70427cd020b5f1c31e4e"
         }
     },
     "pre_install": [
