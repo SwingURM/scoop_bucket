@@ -23,7 +23,10 @@
         "Get-ChildItem -Path \"$dir\\lib\" -Filter *.dll | Move-Item -Destination \"$dir\\bin\""
     ],
     "env_add_path": "bin",
-    "checkver": "github",
+    "checkver": {
+        "url": "https://api.github.com/repos/trcrsired/gcc-releases/releases",
+        "jsonpath": "$[0].tag_name"
+    },
     "autoupdate": {
         "architecture": {
             "64bit": {
